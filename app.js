@@ -1,4 +1,5 @@
-require("dotenv").config();
+require("dotenv").config(); //this means .env file will be read and loads the environment variables
+// into the Node.js application
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
