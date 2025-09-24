@@ -6,12 +6,15 @@ const userRouter = require("./users");
 const characterRouter = require("./characters");
 const { auth } = require("../middlewares/auth"); //protect the routes
 const { login, createUser } = require("../controllers/users");
+const { main } = require("../controllers/main");
 
 // Move this FIRST - before any route handlers
 router.use((req, res, next) => {
   console.log(`Received request: ${req.method} ${req.path}`);
   next();
 });
+
+router.get("/", main); //root route
 
 //USERS
 //// Authentication routes (no auth middleware needed)
