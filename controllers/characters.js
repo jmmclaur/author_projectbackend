@@ -6,8 +6,17 @@ const Character = require("../models/character");
 const createCharacter = async (req, res) => {
   //receives request and response objects
   try {
-    const { characterName, characterAge, characterWeapon, characterBrigade } =
-      req.body; //data extraction, searching for character data with destructuring
+    const {
+      characterName,
+      characterAge,
+      characterWeapon,
+      characterBrigade,
+      characterImage,
+      characterLikes,
+      characterDislikes,
+      characterGoals,
+    } = req.body; //data extraction, searching for character data with destructuring
+    console.log("Received data:", req.body);
     const userId = req.user._id; //user authentication applied here, finds id of currently logged in user
     const newCharacter = await Character.create({
       //create a new document in the db
@@ -15,8 +24,13 @@ const createCharacter = async (req, res) => {
       characterAge,
       characterWeapon,
       characterBrigade,
+      characterImage,
+      characterLikes,
+      characterDislikes,
+      characterGoals,
       owner: userId,
     });
+    console.log("Created character:", newCharacter);
     res.status(201).json(newCharacter); //if successful, the new character will appear in the frontend
   } catch (err) {
     res
@@ -30,8 +44,10 @@ const getAllCharacters = async (req, res) => {
   try {
     let query = {}; //declare this first
     query.owner = req.user._id; //look for specific owners via id
-
+    console.log("User ID:", req.user._id); // Add this line
+    console.log("Query:", query);
     const allCharacters = await Character.find(query);
+    console.log("Found characters:", allCharacters);
     res.status(200).json(allCharacters);
   } catch (err) {
     res.status(500).json({ message: "Error retrieving characters" });
@@ -49,6 +65,10 @@ const getOneCharacter = async (req, res) => {
     const characterAge = req.query.characterAge;
     const characterWeapon = req.query.characterWeapon;
     const characterBrigade = req.query.characterBrigade;
+    const characterImage = req.query.characterImage;
+    const characterLikes = req.query.characterLikes;
+    const characterDislikes = req.query.characterDislikes;
+    const characterGoals = req.query.characterGoals;
 
     //use if to filter only when provided (these are conditional checks)
     if (characterName) {
@@ -62,6 +82,18 @@ const getOneCharacter = async (req, res) => {
     }
     if (characterBrigade) {
       query.characterBrigade = characterBrigade;
+    }
+    if (characterImage) {
+      query.characterImage = characterImage;
+    }
+    if (characterLikes) {
+      query.characterLikes = characterLikes;
+    }
+    if (characterDislikes) {
+      query.characterDislikes = characterDislikes;
+    }
+    if (characterGoals) {
+      query.characterGoals = characterGoals;
     }
 
     const characters = await Character.find(query);

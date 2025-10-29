@@ -5,6 +5,7 @@ const {
   getOneCharacter,
   updateCharacter,
 } = require("../controllers/characters");
+const { auth } = require("../middlewares/auth");
 
 // Move this to the TOP - before any routes
 router.use((req, res, next) => {
@@ -12,9 +13,9 @@ router.use((req, res, next) => {
   next();
 });
 
-router.get("/list", getAllCharacters);
-router.post("/", createCharacter);
-router.get("/:characterId", getOneCharacter); //finds character by id
-router.patch("/update/:characterId", updateCharacter); //updates identified character
+router.get("/list", auth, getAllCharacters);
+router.post("/", auth, createCharacter);
+router.get("/:characterId", auth, getOneCharacter); //finds character by id
+router.patch("/update/:characterId", auth, updateCharacter); //updates identified character
 
 module.exports = router;

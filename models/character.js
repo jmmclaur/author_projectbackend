@@ -27,20 +27,25 @@ const characterSchema = new mongoose.Schema({
     maxlength: [50, "Brigade must be no longer than 50 characters"],
   },
   characterImage: {
-    type: String,
-    required: false,
+    type: String, //set up to convert to base64 string for image storage
+    required: true,
   },
   characterLikes: {
     type: String,
-    required: false,
+    required: true,
   },
   characterDislikes: {
     type: String,
-    required: false,
+    required: true,
   },
   characterGoals: {
     type: String,
-    required: false,
+    required: true,
+  },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+    required: true,
   },
 });
 
