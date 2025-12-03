@@ -26,6 +26,11 @@ const userSchema = new mongoose.Schema({
     minlength: [2, "Password must be at least 2 characters long"],
     maxlength: [70, "Password must be no longer than 70 characters"],
   },
+  role: {
+    type: String,
+    enum: ["user", "admin"],
+    default: "user",
+  },
 });
 
 userSchema.statics.findUserByCredentials = function (email, password) {

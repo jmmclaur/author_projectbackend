@@ -43,7 +43,7 @@ const createCharacter = async (req, res) => {
 const getAllCharacters = async (req, res) => {
   try {
     let query = {}; //declare this first
-    query.owner = req.user._id; //look for specific owners via id
+    //query.owner = req.user._id; //look for specific owners via id //testing only - if removed, does this allow regular users to see all admin characters? 12.2.2025
     console.log("User ID:", req.user._id); // Add this line
     console.log("Query:", query);
     const allCharacters = await Character.find(query);
